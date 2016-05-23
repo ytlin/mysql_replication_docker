@@ -29,8 +29,8 @@ if [ "$1" = 'mysqld' ]; then
 		fi
 		mkdir -p "$DATADIR"
 		chown -R mysql:mysql "$DATADIR"
-		mkdir /var/lib/mysql/data
-		chown mysql:mysql /var/lib/mysql/data
+#		mkdir /var/lib/mysql/data
+#		chown mysql:mysql /var/lib/mysql/data
 		mkdir /etc/mysql/conf.d
 		chown mysql:mysql /etc/mysql/conf.d
 		mkdir /var/log/mysql
@@ -67,14 +67,11 @@ if [ "$1" = 'mysqld' ]; then
 			echo "GENERATED ROOT PASSWORD: $MYSQL_ROOT_PASSWORD"
 		fi
 		"${mysql[@]}" <<-EOSQL
-			-- What's done in this file shouldn't be replicated
-			--  or products like mysql-fabric won't work
-			SET @@SESSION.SQL_LOG_BIN=0;
 			DELETE FROM mysql.user where user != 'mysql.sys';
 			CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' ;
 			GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION ;
 			DROP DATABASE IF EXISTS test ;
-			FLUSH PRIVILEGES ;
+            FLUSH PRIVILEGES ;
 		EOSQL
 		if [ ! -z "$MYSQL_ROOT_PASSWORD" ]; then
 			mysql+=( -p"${MYSQL_ROOT_PASSWORD}" )

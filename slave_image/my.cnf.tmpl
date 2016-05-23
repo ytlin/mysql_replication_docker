@@ -30,7 +30,7 @@ nice		= 0
 
 [mysqld]
 user		= mysql
-datadir		= /var/lib/mysql/data
+datadir		= /var/lib/mysql
 tmpdir		= /tmp
 
 log-bin-index   = /var/log/mysql/mysql-bin.index
@@ -40,6 +40,7 @@ relay-log       = /var/log/mysql/mysqld-relay-bin
 report-host     = HOSTNAME
 replicate_wild_ignore_table = mysql.%
 
+replicate-ignore-db = test
 
 # Recommended in standard MySQL setup
 sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
