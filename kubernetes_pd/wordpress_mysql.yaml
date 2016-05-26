@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+spec:
+  replicas: 1  
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers: 
+        - resources:
+            limits :
+              cpu: 0.5
+          image: mysql_master
+          name: mysql
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "12345"
+            - name: MYSQL_REPLICATION_PASSWORD
+              value: "12345"
+          ports: 
+            - containerPort: 3306
+              name: mysql
+        - image: wordpress
+          name: wordpress
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: WORDPRESS_DB_PASSWORD
+              # change this - must match mysql.yaml password
+              value: "12345"
+            - name: WORDPRESS_DB_USER
+              value: root
+            - name: WORDPRESS_DB_HOST
+              value: 127.0.0.1:3306
+          ports: 
+            - containerPort: 80
+              name: wordpress
+

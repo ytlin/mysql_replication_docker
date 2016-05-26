@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-replication
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql_slave
+          name: mysql
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "12345"
+            - name: MYSQL_REPLICATION_PASSWORD
+              value: "12345"
+            - name: MYSQL_MASTER_SERVICE_HOST
+              value: 10.1.24.5 
+          ports:
+            - containerPort: 3306
+              name: mysql
+
