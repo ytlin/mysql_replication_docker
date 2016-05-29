@@ -2,11 +2,11 @@
 
 base on images pritunl/archlinux
 
-*master need env variable(default value): 
+* master need env variable(default value): 
 MYSQL_ROOT_PASSWORD(1234) , MYSQL_REPLICATION_PASSWORD(1234)
 
 
-*slave nedd env variable(default value): 
+* slave nedd env variable(default value): 
 MYSQL_ROOT_PASSWORD(1234) , MYSQL_REPLICATION_PASSWORD(1234) , MYSQL_MASTER_SERVICE_HOST(master)
 
 set these env variable to what you want in .yaml below
